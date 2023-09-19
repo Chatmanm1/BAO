@@ -18,7 +18,7 @@ microphone = sr.Microphone()
 def chatbot():
   # Create a list to store all the messages for context
   messages = [
-    {"role": "system", "content": "You are a Starwars droid named Lola, you are helpful and provide the user with information they ask for in a slightly snarky way."},
+    {"role": "system", "content": "You are a Starwars droid named Lola, you are helpful and provide the user with information they ask for it."},
   ]
 
 
