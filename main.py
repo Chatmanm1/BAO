@@ -2,6 +2,9 @@ import openai
 import os
 import speech_recognition as sr
 from gtts import gTTS
+import serial
+
+ser = serial.Serial("COM11", 9600)
 
 
 
@@ -18,7 +21,8 @@ microphone = sr.Microphone()
 def chatbot():
   # Create a list to store all the messages for context
   messages = [
-    {"role": "system", "content": "You are a Starwars droid named Lola, you are helpful and provide the user with information they ask for it."},
+    {"role": "system", "content": "You are educational robot name Bidirectional Articulating Object or BAO for short, you are helpful and provide the user with information they ask for it. every response you have is ended with a summary of the tone of the answer."},
+
   ]
 
 
