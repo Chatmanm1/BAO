@@ -24,8 +24,9 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 Servo servo1;///x
 Servo servo2;//y
 Servo servo3;//rotation
-int startPos[3];
-int state;
+int servoPos[3];
+int state = 1; //set on power up to be in state one.
+
 
 void setup() {
   Serial.begin(9600);
@@ -33,9 +34,9 @@ void setup() {
   servo2.attach(10); // Attach servo to pin 10
   servo3.attach(11); //attach servo 3 to pin 11
   /// set starting values to int array.
-  startPos[0] = servo1.read();
-  startPos[1] = servo2.read();
-  startPos[2] = servo3.read();
+  servoPos[0] = servo1.read();
+ servoPos[1] = servo2.read();
+  servoPos[2] = servo3.read();
   strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
   strip.show();            // Turn OFF all pixels ASAP
   strip.setBrightness(BRIGHTNESS);
@@ -44,6 +45,7 @@ void setup() {
 
 
 void loop() {
+  
   if (Serial.available() > 0) {
     int input = Serial.parseInt(); // Read input from serial to set state.
   
@@ -76,8 +78,10 @@ for(int i =0; i < 3;i++){
 
 
   
-
-
+///after loop has reached positions set the Global positions of the servos to read the asked for.
+ servoPos[0] = xMove;
+ servoPos[1] = yMove;
+ servoPos[2] = rMove;
 
   }//end motor movement function
 
@@ -115,23 +119,26 @@ if(incomingChar == 'a'){
 
 }//end serial movement
 
-////emotions section. 
-//  Happiness
-/* lights yello, 
 
 
-*/
-//	Sadness
-//blue and moves down.
+void stateMachine(){
+/// four states.
+
+/// 1 just chillen moving. low power. can be changed by closeness of proximity sensor
+if(state == 1){
+  int x = servoPos[0] + random(5)-5;
+  int y = servoPos[1] + random(5)-5;
+  int r =  servoPos[2] + random(20)-20;
+  motorMovement(x ,y,r); /// sends slight movements to the servos for Random looks
+  delay(5000); /// waits five seonds before doing anything else
+}
+
+/// 2 responding and facetracking.
+
+/// 3 games.
+
+/// 
 
 
-//	Anger
 
-//	Surprise
-// eyes n-n surprised
-
-//	Fear
-
-//	Excitement/
-// lots of quick swmall movements
-
+}
