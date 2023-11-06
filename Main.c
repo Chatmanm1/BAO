@@ -35,7 +35,7 @@ void setup() {
   servo3.attach(11); //attach servo 3 to pin 11
   /// set starting values to int array.
   servoPos[0] = servo1.read();
- servoPos[1] = servo2.read();
+  servoPos[1] = servo2.read();
   servoPos[2] = servo3.read();
   strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
   strip.show();            // Turn OFF all pixels ASAP
