@@ -137,7 +137,12 @@ if(state == 1){
 
 /// 3 games.
 
-/// 
+/// 4 keyboard control for puppeteering.
+
+if(state == 4){
+  serialMovement();
+  // directly interacts with servos for less latency. ;p
+}
 
 
 
