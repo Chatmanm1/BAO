@@ -45,58 +45,43 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0) {
-    int input = Serial.read(); // Read input from serial to set state.
+    int input = Serial.parseInt(); // Read input from serial to set state.
   
 
   }//end if serial available getting how to move from PI.
-motorMovement();
+
 
 }///end main loop
 
 
 
-void motorMovement(xMove, yMove,rMove){
+void motorMovement(xMove,yMove,rMove){ /// send what to move to handles smoothing.
   int prev[3];
-  int current[3];
+  int desired[3];
+
+  desired[0] = xMove;
+  desired[1] = yMove;
+  desired[2] = rMove;
  
- for(int i =0; i < 2;i++){
- prev[i]=startPos[i];
- }//initialize positions
+for(int i =0; i < 3;i++){
+   if(desired[i]!= prev[i]){
+  servo1.write((prev[0]*.95)+(desired[0]*.05)); 
+  servo2.write((prev[1]*.95)+(desired[1]*.05)); 
+  servo3.write((prev[2]*.95)+(desired[2]*.05));
 
-  if(state == 1){//
-  servo1.write((prev[0]*.95)+(startPos[0])); 
-  servo2.write((prev[1]*.95)+(startPos[1])); 
-  servo3.write((prev[2]*.95)+(startPos[2]));
-  // blinking'
-  // rainbow light effect.
-
-  for(int i =0; i < 2;i++){
  prev[i]=((prev[i]*.95)+(startPos[i]));
+   }//end if
    }
- }//reestablish preveious.
-
-
-  }//end if state 1
-
-//movement type 1 random looking around.
-
-  if(state == 2){
-    // get servo directions over serial. 
-    // X, Y, T to denote angle needed from each then write to servo
-
-
-}//movement type  
   
-  if(state == 3){///redlight greenligh
-  //get 
 
-}//movement type 
 
-  if(state== 4){
-///control servos with keyboard.
+  
 
-  }//end if state 4
-}//end movement
+
+
+  }//end motor movement function
+
+
 
 
 void serialMovement(){
