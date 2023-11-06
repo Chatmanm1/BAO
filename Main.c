@@ -26,7 +26,7 @@ Servo servo2;//y
 Servo servo3;//rotation
 int servoPos[3];
 int state = 1; //set on power up to be in state one.
-
+int input; 
 
 void setup() {
   Serial.begin(9600);
@@ -47,11 +47,11 @@ void setup() {
 void loop() {
   
   if (Serial.available() > 0) {
-    int input = Serial.parseInt(); // Read input from serial to set state.
+     input = Serial.parseInt(); // Read input from serial to set state.
   
 
   }//end if serial available getting how to move from PI.
-
+stateMachine();
 
 }///end main loop
 
@@ -65,7 +65,7 @@ void motorMovement(xMove,yMove,rMove){ /// send what to move to handles smoothin
   desired[1] = yMove;
   desired[2] = rMove;
  
-for(int i =0; i < 3;i++){
+ for(int i =0; i < 3;i++){
    if(desired[i]!= prev[i]){
   servo1.write((prev[0]*.95)+(desired[0]*.05)); 
   servo2.write((prev[1]*.95)+(desired[1]*.05)); 
@@ -78,44 +78,44 @@ for(int i =0; i < 3;i++){
 
 
   
-///after loop has reached positions set the Global positions of the servos to read the asked for.
- servoPos[0] = xMove;
- servoPos[1] = yMove;
- servoPos[2] = rMove;
+ ///after loop has reached positions set the Global positions of the servos to read the asked for.
+  servoPos[0] = xMove;
+  servoPos[1] = yMove;
+  servoPos[2] = rMove;
 
-  }//end motor movement function
+}//end motor movement function
 
 
 
 
 void serialMovement(){
-if(Serial.available() > 0) {  // Check if data is available to read
+ if(Serial.available() > 0) {  // Check if data is available to read
     char incomingChar = Serial.read();  // Read a character from the serial input
-}/// end keyboard move.
+ }/// end keyboard move.
 
-if(incomingChar == 'w'){
+  if(incomingChar == 'w'){
   servo1.write(servo1.read()+5)
-}//keyboard movement
-if(incomingChar == 's'){
-  servo1.write(servo1.read()-5)
-}//keyboard movement
+  }//keyboard movement
+  if(incomingChar == 's'){
+      servo1.write(servo1.read()-5)
+  //keyboard movement
+  }
 
-if(incomingChar == 'q'){
-  servo2.write(servo2.read()+5)
-}//keyboard movement
-if(incomingChar == 'e'){
-  servo2.write(servo2.read()-5)
-}//keyboard movement
+  if(incomingChar == 'q'){
+    servo2.write(servo2.read()+5)
+  }//keyboard movement
+  if(incomingChar == 'e'){
+   servo2.write(servo2.read()-5)
+  }//keyboard movement
 
+ // servo 3
+  if(incomingChar == 'd'){
+    servo3.write(servo3.read()+5)
+  }//keyboard movement
+  if(incomingChar == 'a'){
+    servo3.write(servo3.read()-5)
+  }//keyboard movement
 
- if(incomingChar == 'd'){
-  servo2.write(servo3.read()+5)
-}//keyboard movement
-if(incomingChar == 'a'){
-  servo2.write(servo3.read()-5)
-}//keyboard movement
- // get servo directions over serial for facetracking. 
-    // X, Y, T to denote angle needed from each then write to servo
 
 }//end serial movement
 
