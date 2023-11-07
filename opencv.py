@@ -1,16 +1,14 @@
 import cv2
 
-
 # Load the pre-trained face detection model
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Read an image or video stream
 # For example, to use a webcam:
-cap = cv.CAP_ANY
+cap = cv2.VideoCapture(cv2.CAP_ANY)  # or 
 
 while True:
     # Capture frame-by-frame
-
     ret, frame = cap.read()
 
     # Convert the frame to grayscale for face detection
