@@ -1,33 +1,44 @@
-import cv2
 
-# Load the pre-trained face detection model
+
+# Initialize serial communication for controlling servos
+ser = serial.Serial('COMX', 9600)  # Replace 'COMX' with your serial port and 9600 with your baud rate
+
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Read an image or video stream
-# For example, to use a webcam:
-cap = cv2.VideoCapture(cv2.CAP_ANY)  # or 
+cap = cv2.VideoCapture(0)  # Access the webcam
 
 while True:
-    # Capture frame-by-frame
     ret, frame = cap.read()
 
-    # Convert the frame to grayscale for face detection
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # Detect faces in the frame
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=2, minSize=(30, 30))
 
-    # Draw rectangles around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-    # Display the resulting frame
+        # Calculate the midpoint of the face
+        face_mid_x = x + w // 2
+        face_mid_y = y + h // 2
+
+        # Get the center of the frame
+        frame_mid_x = frame.shape[1] // 2
+        frame_mid_y = frame.shape[0] // 2
+
+        # Calculate the difference between the face midpoint and frame center
+        delta_x = face_mid_x - frame_mid_x
+        delta_y = face_mid_y - frame_mid_y
+
+        # You may need to adjust the sensitivity and servo control logic here
+        # Send signals over serial to control the servos based on the delta values
+        # For example:
+        # ser.write(f'X{delta_x}Y{delta_y}\n'.encode())
+
     cv2.imshow('Face Detection', frame)
 
-    # Break the loop if 'q' is pressed
-    if cv2.waitKey(6) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release the capture and close all windows
 cap.release()
 cv2.destroyAllWindows()
+ser.close()  # Close the serial connection at the end
