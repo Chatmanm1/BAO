@@ -32,7 +32,22 @@ while True:
         # You may need to adjust the sensitivity and servo control logic here
         # Send signals over serial to control the servos based on the delta values
         # For example:
-        # ser.write(f'X{delta_x}Y{delta_y}\n'.encode())
+
+        # sending servo commands to get to middle  idk what 
+        if(delta_x > 0):
+            serial.write('s'.encode())
+        
+        if(delta_x <0):
+            serial.write('w'.encode())
+        
+        if(delta_y<0):
+            serial.write('q'.encode())
+        if(delta_y>0):
+            serial.write('a'.encode())
+
+
+
+        #ser.write(f'X{delta_x}Y{delta_y}\n'.encode())
 
     cv2.imshow('Face Detection', frame)
 

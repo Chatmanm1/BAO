@@ -92,7 +92,7 @@ void serialMovement(){
  if(Serial.available() > 0) {  // Check if data is available to read
     char incomingChar = Serial.read();  // Read a character from the serial input
  }/// end keyboard move.
-
+///x axis 
   if(incomingChar == 'w'){
   servo1.write(servo1.read()+5)
   }//keyboard movement
@@ -100,14 +100,14 @@ void serialMovement(){
       servo1.write(servo1.read()-5)
   //keyboard movement
   }
-
+///y axis
   if(incomingChar == 'q'){
     servo2.write(servo2.read()+5)
   }//keyboard movement
   if(incomingChar == 'e'){
    servo2.write(servo2.read()-5)
   }//keyboard movement
-
+/// pitch back axis
  // servo 3
   if(incomingChar == 'd'){
     servo3.write(servo3.read()+5)
