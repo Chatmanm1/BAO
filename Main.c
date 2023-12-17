@@ -27,6 +27,7 @@ Servo servo3;//rotation
 int servoPos[3];
 int state = 1; //set on power up to be in state one.
 int input; 
+int servoMoveAmount;
 
 void setup() {
   Serial.begin(9600);
@@ -43,6 +44,10 @@ void setup() {
 
 }//end setup.
 
+
+
+///serial should transfer line by line in the format
+/// state-x-y-r
 
 void loop() {
   
@@ -102,18 +107,18 @@ void serialMovement(){
   }
 ///y axis
   if(incomingChar == 'q'){
-    servo2.write(servo2.read()+5)
+    servo2.write(servo2.read()+servoMoveAmount)
   }//keyboard movement
   if(incomingChar == 'e'){
-   servo2.write(servo2.read()-5)
+   servo2.write(servo2.read()-servoMoveAmount)
   }//keyboard movement
 /// pitch back axis
  // servo 3
   if(incomingChar == 'd'){
-    servo3.write(servo3.read()+5)
+    servo3.write(servo3.read()+servoMoveAmount)
   }//keyboard movement
   if(incomingChar == 'a'){
-    servo3.write(servo3.read()-5)
+    servo3.write(servo3.read()-servoMoveAmount)
   }//keyboard movement
 
 
